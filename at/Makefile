@@ -72,6 +72,7 @@ LINKFLAGS_eagle.app.v6 = \
 	-lgcc					\
 	-lhal					\
 	-lphy	\
+	-lpp	\
 	-lnet80211	\
 	-llwip	\
 	-lwpa	\
