@@ -6,13 +6,17 @@
 #include "at_ipCmd.h"
 #include "at_baseCmd.h"
 
-#define at_cmdNum   20
+#define at_cmdNum   25
 
 at_funcationType at_fun[at_cmdNum]={
   {NULL, 0, NULL, NULL, NULL, at_exeCmdNull},
   {"E", 1, NULL, NULL, at_setupCmdE, NULL},
   {"+RST", 4, NULL, NULL, NULL, at_exeCmdRst},
   {"+GMR", 4, NULL, NULL, NULL, at_exeCmdGmr},
+  {"+IPR", 4, NULL, NULL, at_setupCmdIpr, NULL},
+#ifdef ali
+  {"+UPDATE", 7, NULL, NULL, NULL, at_exeCmdUpdate},
+#endif
   {"+CWMODE", 7, at_testCmdCwmode, at_queryCmdCwmode, at_setupCmdCwmode, NULL},
   {"+CWJAP", 6, NULL, at_queryCmdCwjap, at_setupCmdCwjap, NULL},
   {"+CWLAP", 6, NULL, NULL, at_setupCmdCwlap, at_exeCmdCwlap},
@@ -28,7 +32,11 @@ at_funcationType at_fun[at_cmdNum]={
   {"+CIPSERVER", 10, NULL, NULL,at_setupCmdCipserver, NULL},
   {"+CIPMODE", 8, NULL, at_queryCmdCipmode, at_setupCmdCipmode, NULL},
   {"+CIPSTO", 7, NULL, at_queryCmdCipsto, at_setupCmdCipsto, NULL},
-  {"+CIUPDATE", 9, NULL, NULL, NULL, at_exeCmdUpdate}
+  {"+CIUPDATE", 9, NULL, NULL, NULL, at_exeCmdCiupdate},
+  {"+CIPING", 7, NULL, NULL, NULL, at_exeCmdCiping},
+#ifdef ali
+  {"+MPINFO", 7, NULL, NULL, at_setupCmdMpinfo, NULL}
+#endif
 };
 
 #endif

@@ -82,6 +82,7 @@ at_recvTask(os_event_t *events)
       if((temp != '\n') && (echoFlag))
       {
         uart_tx_one_char(temp); //display back
+//        uart_tx_one_char(UART0, temp);
       }
     }
 //    if((at_state != at_statIpTraning) && (temp != '\n') && (echoFlag))
@@ -102,7 +103,7 @@ at_recvTask(os_event_t *events)
       }
       else if(temp == '\n') //only get enter
       {
-        uart0_sendStr("\r\nError\r\n");
+        uart0_sendStr("\r\nERROR\r\n");
       }
       break;
 
@@ -111,6 +112,8 @@ at_recvTask(os_event_t *events)
       if(temp == '\n')
       {
         system_os_post(at_procTaskPrio, 0, 0);
+        pCmdLine++;
+        *pCmdLine = '\0';
         at_state = at_statProcess;
         if(echoFlag)
         {
@@ -139,7 +142,10 @@ at_recvTask(os_event_t *events)
         system_os_post(at_procTaskPrio, 0, 0);
         at_state = at_statIpSended;
       }
-      pDataLine++;
+      else
+      {
+        pDataLine++;
+      }
 //    *pDataLine = temp;
 //    if (pDataLine == &UartDev.rcv_buff.pRcvMsgBuff[at_sendLen-1])
 //    {
@@ -162,6 +168,7 @@ at_recvTask(os_event_t *events)
 //      *pDataLine = temp;
       if(pDataLine > &at_dataLine[at_dataLenMax - 1])
       {
+        os_timer_arm(&at_delayChack, 0, 0);
         os_printf("exceed\r\n");
         return;
       }
@@ -171,7 +178,7 @@ at_recvTask(os_event_t *events)
         *pDataLine = temp;
         pDataLine++;
         at_tranLen++;
-        os_timer_arm(&at_delayChack, 1, 0);
+        os_timer_arm(&at_delayChack, 0, 0);
         return;
       }
       else

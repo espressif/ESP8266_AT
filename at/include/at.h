@@ -6,6 +6,7 @@
 //#define at_busyTaskPrio        1
 //#define at_busyTaskQueueLen    4
 
+//#define ali
 
 #define at_recvTaskPrio        0
 #define at_recvTaskQueueLen    64
@@ -44,6 +45,12 @@ typedef struct
   void (*at_setupCmd)(uint8_t id, char *pPara);
   void (*at_exeCmd)(uint8_t id);
 }at_funcationType;
+
+typedef struct
+{
+  uint32_t baud;
+  uint32_t saved;
+}at_uartType;
 
 void at_init(void);
 void at_cmdProcess(uint8_t *pAtRcvData);
