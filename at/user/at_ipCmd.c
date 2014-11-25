@@ -1975,6 +1975,8 @@ at_exeCmdUpdate(uint8_t id)
   espconn_gethostbyname(pespconn, "iot.espressif.cn", &host_ip, upServer_dns_found);
 }
 
+test
+
 /**
   * @}
   */
