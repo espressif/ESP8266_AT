@@ -642,6 +642,21 @@ at_setupCmdCwdhcp(uint8_t id, char *pPara)
 }
 
 void ICACHE_FLASH_ATTR
+at_queryCmdCipstamac(uint8_t id)
+{
+	char temp[64];
+  uint8 bssid[6];
+  
+  os_sprintf(temp, "%s:", at_fun[id].at_cmdName);
+  uart0_sendStr(temp);
+
+  wifi_get_macaddr(STATION_IF, bssid);
+  os_sprintf(temp, "\""MACSTR"\"\r\n", MAC2STR(bssid));
+  uart0_sendStr(temp);
+  at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
 at_setupCmdCipstamac(uint8_t id, char *pPara)
 {
 	int8_t len,i;
@@ -668,6 +683,22 @@ at_setupCmdCipstamac(uint8_t id, char *pPara)
   os_printf(MACSTR"\r\n", MAC2STR(bssid));
   wifi_set_macaddr(STATION_IF, bssid);
 	at_backOk;
+}
+
+
+void ICACHE_FLASH_ATTR
+at_queryCmdCipapmac(uint8_t id)
+{
+	char temp[64];
+  uint8 bssid[6];
+  
+  os_sprintf(temp, "%s:", at_fun[id].at_cmdName);
+  uart0_sendStr(temp);
+
+  wifi_get_macaddr(SOFTAP_IF, bssid);
+  os_sprintf(temp, "\""MACSTR"\"\r\n", MAC2STR(bssid));
+  uart0_sendStr(temp);
+  at_backOk;
 }
 
 void ICACHE_FLASH_ATTR
@@ -697,6 +728,21 @@ at_setupCmdCipapmac(uint8_t id, char *pPara)
   os_printf(MACSTR"\r\n", MAC2STR(bssid));
   wifi_set_macaddr(SOFTAP_IF, bssid);
 	at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
+at_queryCmdCipsta(uint8_t id)
+{
+	struct ip_info pTempIp;
+  char temp[64];
+  
+  wifi_get_ip_info(0x00, &pTempIp);
+  os_sprintf(temp, "%s:", at_fun[id].at_cmdName);
+  uart0_sendStr(temp);
+
+  os_sprintf(temp, "\"%d.%d.%d.%d\"\r\n", IP2STR(&pTempIp.ip));
+  uart0_sendStr(temp);
+  at_backOk;
 }
 
 void ICACHE_FLASH_ATTR
@@ -730,6 +776,21 @@ at_setupCmdCipsta(uint8_t id, char *pPara)
     return;
   }
   wifi_station_dhcpc_start();
+  at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
+at_queryCmdCipap(uint8_t id)
+{
+	struct ip_info pTempIp;
+  char temp[64];
+  
+  wifi_get_ip_info(0x01, &pTempIp);
+  os_sprintf(temp, "%s:", at_fun[id].at_cmdName);
+  uart0_sendStr(temp);
+
+  os_sprintf(temp, "\"%d.%d.%d.%d\"\r\n", IP2STR(&pTempIp.ip));
+  uart0_sendStr(temp);
   at_backOk;
 }
 

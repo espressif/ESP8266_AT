@@ -110,7 +110,7 @@ at_exeCmdCifsr(uint8_t id)//add get station ip and ap ip
     os_sprintf(temp, "%s:APIP,", at_fun[id].at_cmdName);
     uart0_sendStr(temp);
 
-    os_sprintf(temp, "%d.%d.%d.%d\r\n",
+    os_sprintf(temp, "\"%d.%d.%d.%d\"\r\n",
                IP2STR(&pTempIp.ip));
     uart0_sendStr(temp);
 
@@ -118,7 +118,7 @@ at_exeCmdCifsr(uint8_t id)//add get station ip and ap ip
     uart0_sendStr(temp);
 
     wifi_get_macaddr(SOFTAP_IF, bssid);
-    os_sprintf(temp, MACSTR"\r\n",
+    os_sprintf(temp, "\""MACSTR"\"\r\n",
                MAC2STR(bssid));
     uart0_sendStr(temp);
 //    mdState = m_gotip; /////////
@@ -129,7 +129,7 @@ at_exeCmdCifsr(uint8_t id)//add get station ip and ap ip
     os_sprintf(temp, "%s:STAIP,", at_fun[id].at_cmdName);
     uart0_sendStr(temp);
 
-    os_sprintf(temp, "%d.%d.%d.%d\r\n",
+    os_sprintf(temp, "\"%d.%d.%d.%d\"\r\n",
                IP2STR(&pTempIp.ip));
     uart0_sendStr(temp);
 
@@ -137,7 +137,7 @@ at_exeCmdCifsr(uint8_t id)//add get station ip and ap ip
     uart0_sendStr(temp);
 
     wifi_get_macaddr(STATION_IF, bssid);
-    os_sprintf(temp, MACSTR"\r\n",
+    os_sprintf(temp, "\""MACSTR"\"\r\n",
                MAC2STR(bssid));
     uart0_sendStr(temp);
 //    mdState = m_gotip; /////////

@@ -23,12 +23,16 @@ void at_exeCmdCwlif(uint8_t id);
 void at_queryCmdCwdhcp(uint8_t id);
 void at_setupCmdCwdhcp(uint8_t id, char *pPara);
 
+void at_queryCmdCipstamac(uint8_t id);
 void at_setupCmdCipstamac(uint8_t id, char *pPara);
 
+void at_queryCmdCipapmac(uint8_t id);
 void at_setupCmdCipapmac(uint8_t id, char *pPara);
 
+void at_queryCmdCipsta(uint8_t id);
 void at_setupCmdCipsta(uint8_t id, char *pPara);
 
+void at_queryCmdCipap(uint8_t id);
 void at_setupCmdCipap(uint8_t id, char *pPara);
 
 #endif
