@@ -6,7 +6,7 @@
 #include "at_ipCmd.h"
 #include "at_baseCmd.h"
 
-#define at_cmdNum   25
+#define at_cmdNum   30
 
 at_funcationType at_fun[at_cmdNum]={
   {NULL, 0, NULL, NULL, NULL, at_exeCmdNull},
@@ -23,7 +23,12 @@ at_funcationType at_fun[at_cmdNum]={
   {"+CWQAP", 6, at_testCmdCwqap, NULL, NULL, at_exeCmdCwqap},
   {"+CWSAP", 6, NULL, at_queryCmdCwsap, at_setupCmdCwsap, NULL},
   {"+CWLIF", 6, NULL, NULL, NULL, at_exeCmdCwlif},
+  {"+CWDHCP", 7, NULL, at_queryCmdCwdhcp, at_setupCmdCwdhcp, NULL},
   {"+CIFSR", 6, at_testCmdCifsr, NULL, at_setupCmdCifsr, at_exeCmdCifsr},
+  {"+CIPSTAMAC", 10, NULL, NULL, at_setupCmdCipstamac, NULL},
+  {"+CIPAPMAC", 9, NULL, NULL, at_setupCmdCipapmac, NULL},
+  {"+CIPSTA", 7, NULL, NULL, at_setupCmdCipsta, NULL},
+  {"+CIPAP", 6, NULL, NULL, at_setupCmdCipap, NULL},
   {"+CIPSTATUS", 10, at_testCmdCipstatus, NULL, NULL, at_exeCmdCipstatus},
   {"+CIPSTART", 9, at_testCmdCipstart, NULL, at_setupCmdCipstart, NULL},
   {"+CIPCLOSE", 9, at_testCmdCipclose, NULL, at_setupCmdCipclose, at_exeCmdCipclose},

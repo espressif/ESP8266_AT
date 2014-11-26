@@ -1448,11 +1448,6 @@ at_tcpserver_discon_cb(void *arg)
 
   os_printf("S conect C: %p\r\n", arg);
 
-  if (pespconn == NULL)
-  {
-    return;
-  }
-
   linkTemp->linkEn = FALSE;
   linkTemp->pCon = NULL;
 //  os_printf("con EN? %d\r\n", linkTemp->linkId);
@@ -1980,10 +1975,6 @@ at_upDate_discon_cb(void *arg)
   struct espconn *pespconn = (struct espconn *)arg;
   uint8_t idTemp;
 
-//  if(pespconn == NULL)
-//  {
-//    return;
-//  }
   if(pespconn->proto.tcp != NULL)
   {
     os_free(pespconn->proto.tcp);

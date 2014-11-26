@@ -569,6 +569,204 @@ at_exeCmdCwlif(uint8_t id)
   at_backOk;
 }
 
+void ICACHE_FLASH_ATTR
+at_queryCmdCwdhcp(uint8_t id)
+{
+	char temp[32];
+	
+}
+
+void ICACHE_FLASH_ATTR
+at_setupCmdCwdhcp(uint8_t id, char *pPara)
+{
+	uint8_t mode,opt;
+	int8_t ret = 0;
+
+	pPara++;
+	mode = 0;
+	mode = atoi(pPara);
+	pPara ++;
+	pPara = strchr(pPara, ',');
+	pPara++;
+	opt = atoi(pPara);
+	
+	switch (mode)
+	{
+	case 0:
+	  if(opt)
+	  {
+	  	ret = wifi_softap_dhcps_start();
+	  }
+	  else 
+	  {
+	  	ret = wifi_softap_dhcps_stop();
+	  }
+		break;
+	
+	case 1:
+		if(opt)
+	  {
+	  	ret = wifi_station_dhcpc_start();
+	  }
+	  else 
+	  {
+	  	ret = wifi_station_dhcpc_stop();
+	  }
+		break;
+	
+	case 2:
+		if(opt)
+	  {
+	  	ret = wifi_softap_dhcps_start();
+	  	ret |= wifi_station_dhcpc_start();
+	  }
+	  else 
+	  {
+	  	ret = wifi_softap_dhcps_stop();
+	  	ret |= wifi_station_dhcpc_stop();
+	  }
+		break;	
+	
+	default:
+			
+		break;		
+	}
+	if(ret)
+	{
+	  at_backOk;
+	}
+	else 
+	{
+		at_backError;
+	}
+}
+
+void ICACHE_FLASH_ATTR
+at_setupCmdCipstamac(uint8_t id, char *pPara)
+{
+	int8_t len,i;
+  uint8 bssid[6];
+  char temp[64];
+  
+	pPara++;
+	
+  len = at_dataStrCpy(temp, pPara, 32);
+  if(len != 17)
+  {
+    at_backError;
+    return;
+  }
+
+  pPara++; 
+ 
+  for(i=0;i<6;i++)
+  {
+    bssid[i] = strtol(pPara,&pPara,16);
+    pPara += 1;
+  }
+ 
+  os_printf(MACSTR"\r\n", MAC2STR(bssid));
+  wifi_set_macaddr(STATION_IF, bssid);
+	at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
+at_setupCmdCipapmac(uint8_t id, char *pPara)
+{
+  int8_t len,i;
+  uint8 bssid[6];
+  char temp[64];
+  
+	pPara++;
+	
+  len = at_dataStrCpy(temp, pPara, 32);
+  if(len != 17)
+  {
+    at_backError;
+    return;
+  }
+
+  pPara++; 
+ 
+  for(i=0;i<6;i++)
+  {
+    bssid[i] = strtol(pPara,&pPara,16);
+    pPara += 1;
+  }
+ 
+  os_printf(MACSTR"\r\n", MAC2STR(bssid));
+  wifi_set_macaddr(SOFTAP_IF, bssid);
+	at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
+at_setupCmdCipsta(uint8_t id, char *pPara)
+{
+	struct ip_info pTempIp;
+  int8_t len;
+  char temp[64];
+  
+  wifi_station_dhcpc_stop();
+  
+  pPara++;
+	
+  len = at_dataStrCpy(temp, pPara, 32);
+  if(len == -1)
+  {
+    at_backError;
+    return;
+  }
+  pPara++;
+  wifi_get_ip_info(0x00, &pTempIp);
+  pTempIp.ip.addr = ipaddr_addr(temp);
+
+  os_printf("%d.%d.%d.%d\r\n",
+                 IP2STR(&pTempIp.ip));
+
+  if(!wifi_set_ip_info(0x00, &pTempIp))
+  {
+    at_backError;
+    wifi_station_dhcpc_start();
+    return;
+  }
+  wifi_station_dhcpc_start();
+  at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
+at_setupCmdCipap(uint8_t id, char *pPara)
+{
+	struct ip_info pTempIp;
+  int8_t len;
+  char temp[64];
+  
+  wifi_softap_dhcps_stop();
+  
+  pPara++;
+	
+  len = at_dataStrCpy(temp, pPara, 32);
+  if(len == -1)
+  {
+    at_backError;
+    return;
+  }
+  pPara++;
+  wifi_get_ip_info(0x01, &pTempIp);
+  pTempIp.ip.addr = ipaddr_addr(temp);
+
+  os_printf("%d.%d.%d.%d\r\n",
+                 IP2STR(&pTempIp.ip));
+
+  if(!wifi_set_ip_info(0x01, &pTempIp))
+  {
+    at_backError;
+    wifi_softap_dhcps_start();
+    return;
+  }
+  wifi_softap_dhcps_start();
+  at_backOk;
+}
+
 /**
   * @}
   */
