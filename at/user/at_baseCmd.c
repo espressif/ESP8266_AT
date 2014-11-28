@@ -1,3 +1,20 @@
+/*
+ * File	: at_baseCmd.c
+ * This file is part of Espressif's AT+ command set program.
+ * Copyright (C) 2013 - 2016, Espressif Systems
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include <stdlib.h>
 #include "osapi.h"
 #include "c_types.h"
@@ -244,6 +261,17 @@ at_setupCmdIpr(uint8_t id, char *pPara)
 //    spi_flash_write(60 * 4096, (uint32 *)&upFlag, sizeof(updateFlagType));
 //  //  spi_flash_read(60 * 4096, (uint32 *)&upFlag, sizeof(updateFlagType));
   at_backOk;
+}
+
+void ICACHE_FLASH_ATTR
+at_setupCmdGslp(uint8_t id, char *pPara)
+{
+	uint32_t n;
+	pPara++;
+	
+	n = atoi(pPara);
+	at_backOk;
+	system_deep_sleep(n*1000);
 }
 /**
   * @}

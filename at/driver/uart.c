@@ -1,14 +1,20 @@
-/******************************************************************************
- * Copyright 2013-2014 Espressif Systems (Wuxi)
+/*
+ * File	: uart.c
+ * This file is part of Espressif's AT+ command set program.
+ * Copyright (C) 2013 - 2016, Espressif Systems
  *
- * FileName: uart.c
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
  *
- * Description: Two UART mode configration and interrupt handler.
- *              Check your hardware connection while use this mode.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Modification history:
- *     2014/3/12, v1.0 create this file.
-*******************************************************************************/
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "ets_sys.h"
 #include "osapi.h"
 #include "driver/uart.h"

@@ -1,3 +1,20 @@
+/*
+ * File	: at_cmd.c
+ * This file is part of Espressif's AT+ command set program.
+ * Copyright (C) 2013 - 2016, Espressif Systems
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "at_cmd.h"
 #include "user_interface.h"
 #include "osapi.h"
@@ -105,7 +122,7 @@ at_cmdProcess(uint8_t *pAtRcvData)
       }
       else
       {
-        uart0_sendStr("no this fun\r\n");
+        at_backError;
       }
     }
     else if(*pAtRcvData == '?' && (pAtRcvData[1] == '\r'))
@@ -116,7 +133,7 @@ at_cmdProcess(uint8_t *pAtRcvData)
       }
       else
       {
-        uart0_sendStr("no this fun\r\n");
+        at_backError;
       }
     }
     else if((*pAtRcvData == '=') && (pAtRcvData[1] == '?') && (pAtRcvData[2] == '\r'))
@@ -127,7 +144,7 @@ at_cmdProcess(uint8_t *pAtRcvData)
       }
       else
       {
-        uart0_sendStr("no this fun\r\n");
+        at_backError;
       }
     }
     else if((*pAtRcvData >= '0') && (*pAtRcvData <= '9') || (*pAtRcvData == '='))
@@ -138,12 +155,13 @@ at_cmdProcess(uint8_t *pAtRcvData)
       }
       else
       {
-        uart0_sendStr("no this fun\r\n");
+//        uart0_sendStr("no this fun\r\n"); //Relax, it's just a code.
+        at_backError;
       }
     }
     else
     {
-      uart0_sendStr("enter error\r\n");
+      at_backError;
     }
   }
   else 

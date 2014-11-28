@@ -1,3 +1,20 @@
+/*
+ * File	: at_port.c
+ * This file is part of Espressif's AT+ command set program.
+ * Copyright (C) 2013 - 2016, Espressif Systems
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "at.h"
 #include "user_interface.h"
 #include "osapi.h"
@@ -19,7 +36,7 @@ extern uint16_t at_sendLen;
 extern uint16_t at_tranLen;
 //extern UartDevice UartDev;
 //extern bool IPMODE;
-extern os_timer_t at_delayChack;
+extern os_timer_t at_delayCheck;
 extern uint8_t ipDataSendFlag;
 /**
   * @}
@@ -164,11 +181,11 @@ at_recvTask(os_event_t *events)
       break;
 
     case at_statIpTraning:
-      os_timer_disarm(&at_delayChack);
+      os_timer_disarm(&at_delayCheck);
 //      *pDataLine = temp;
       if(pDataLine > &at_dataLine[at_dataLenMax - 1])
       {
-        os_timer_arm(&at_delayChack, 0, 0);
+        os_timer_arm(&at_delayCheck, 0, 0);
         os_printf("exceed\r\n");
         return;
       }
@@ -178,7 +195,7 @@ at_recvTask(os_event_t *events)
         *pDataLine = temp;
         pDataLine++;
         at_tranLen++;
-        os_timer_arm(&at_delayChack, 0, 0);
+        os_timer_arm(&at_delayCheck, 0, 0);
         return;
       }
       else
@@ -189,20 +206,20 @@ at_recvTask(os_event_t *events)
         at_tranLen++;
 //        if(ipDataSendFlag == 0)
 //        {
-//          os_timer_arm(&at_delayChack, 20, 0);
+//          os_timer_arm(&at_delayCheck, 20, 0);
 //        }
-        os_timer_arm(&at_delayChack, 20, 0);
+        os_timer_arm(&at_delayCheck, 20, 0);
       }
       break;
 
-//      os_timer_disarm(&at_delayChack);
+//      os_timer_disarm(&at_delayCheck);
 //      *pDataLine = temp;
 //      if(pDataLine >= &at_dataLine[at_dataLenMax - 1])
 //      {
 ////        ETS_UART_INTR_DISABLE();
 ////      pDataLine++;
 //        at_tranLen++;
-////      os_timer_arm(&at_delayChack, 1, 0); /////
+////      os_timer_arm(&at_delayCheck, 1, 0); /////
 //        system_os_post(at_procTaskPrio, 0, 0);
 //        break;
 //      }
@@ -210,7 +227,7 @@ at_recvTask(os_event_t *events)
 //      at_tranLen++;
 //      if(ipDataSendFlag == 0)
 //      {
-//        os_timer_arm(&at_delayChack, 20, 0);
+//        os_timer_arm(&at_delayCheck, 20, 0);
 //      }
 //      break;
 
