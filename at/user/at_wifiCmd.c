@@ -792,7 +792,6 @@ at_setupCmdCipsta(uint8_t id, char *pPara)
     wifi_station_dhcpc_start();
     return;
   }
-  wifi_station_dhcpc_start();
   at_backOk;
 }
 
