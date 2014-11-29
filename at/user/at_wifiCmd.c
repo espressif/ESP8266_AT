@@ -500,6 +500,7 @@ at_setupCmdCwsap(uint8_t id, char *pPara)
   }
   pPara++;
   len = at_dataStrCpy(apConfig.ssid, pPara, 32);
+  apConfig.ssid_len = len;
 //  os_printf("%x\r\n",*pPara);/////
 //  os_printf("%s\r\n",apConfig.ssid);/////
   if(len < 1)
