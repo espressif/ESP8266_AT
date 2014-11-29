@@ -100,6 +100,8 @@ at_exeCmdGmr(uint8_t id)
   uart0_sendStr(temp);
   os_sprintf(temp,"%06X\r\n", SDK_VERSION);
   uart0_sendStr(temp);
+  os_sprintf(temp,"compiled @ %s %s\r\n", __DATE__, __TIME__);
+  uart0_sendStr(temp);
   at_backOk;
 }
 
