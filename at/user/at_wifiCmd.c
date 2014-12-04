@@ -489,7 +489,6 @@ at_setupCmdCwsap(uint8_t id, char *pPara)
   int8_t len,passLen;
   struct softap_config apConfig;
 
-  os_bzero(&apConfig, sizeof(struct softap_config));
   wifi_softap_get_config(&apConfig);
 
   if(at_wifiMode == STATION_MODE)
