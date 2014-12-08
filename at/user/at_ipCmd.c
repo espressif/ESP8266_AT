@@ -2273,10 +2273,14 @@ at_exeCmdCiping(uint8_t id)
 	at_backOk;
 }
 
+extern void user_date_test(void);
+
 void ICACHE_FLASH_ATTR
 at_exeCmdCipappup(uint8_t id)
 {
-	
+	os_printf("test\r\n");
+//  user_date_test();
+  at_backOk;
 }
 
 /**

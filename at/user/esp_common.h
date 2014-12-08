@@ -1,5 +1,5 @@
 /*
- * File	: user_main.c
+ * File	: esp_common.h
  * This file is part of Espressif's AT+ command set program.
  * Copyright (C) 2013 - 2016, Espressif Systems
  *
@@ -15,33 +15,20 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ets_sys.h"
-#include "driver/uart.h"
-#include "osapi.h"
-#include "at.h"
-//#include "at_config_store.h"
+#ifndef __ESP_COMMON_H
+#define __ESP_COMMON_H
 
-extern uint8_t at_wifiMode;
-extern void user_esp_platform_load_param(void *param, uint16 len);
+#define ESP_PARAM_START_SEC   0x3C
+#define ESP_PARAM_SAVE_0    1
+#define ESP_PARAM_SAVE_1    2
+#define ESP_PARAM_FLAG      3
 
-void user_init(void)
-{
-  uint8_t userbin;
-  uint32_t upFlag;
-  at_uartType tempUart;
+struct esp_platform_sec_flag_param {
+  uint8 flag;
+  uint8 pad[3];
+};
 
-  user_esp_platform_load_param((uint32 *)&tempUart, sizeof(at_uartType));
-  if(tempUart.saved == 1)
-  {
-    uart_init(tempUart.baud, BIT_RATE_115200);
-  }
-  else
-  {
-    uart_init(BIT_RATE_115200, BIT_RATE_115200);
-  }
-  at_wifiMode = wifi_get_opmode();
-  os_printf("\r\nready!!!\r\n");
-  uart0_sendStr("\r\nready\r\n");
-  at_init();
-//  system_init_done_cb();
-}
+void user_esp_platform_load_param(void *param, uint16_t len);
+void user_esp_platform_save_param(void *param, uint16_t len);
+
+#endif

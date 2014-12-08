@@ -1,5 +1,5 @@
 /*
- * File	: user_main.c
+ * File	: crc32.h
  * This file is part of Espressif's AT+ command set program.
  * Copyright (C) 2013 - 2016, Espressif Systems
  *
@@ -15,33 +15,9 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ets_sys.h"
-#include "driver/uart.h"
-#include "osapi.h"
-#include "at.h"
-//#include "at_config_store.h"
+#ifndef __CRC32_H
+#define __CRC32_H
 
-extern uint8_t at_wifiMode;
-extern void user_esp_platform_load_param(void *param, uint16 len);
+uint32_t crc32_checksum(const uint8_t* data, size_t size);
 
-void user_init(void)
-{
-  uint8_t userbin;
-  uint32_t upFlag;
-  at_uartType tempUart;
-
-  user_esp_platform_load_param((uint32 *)&tempUart, sizeof(at_uartType));
-  if(tempUart.saved == 1)
-  {
-    uart_init(tempUart.baud, BIT_RATE_115200);
-  }
-  else
-  {
-    uart_init(BIT_RATE_115200, BIT_RATE_115200);
-  }
-  at_wifiMode = wifi_get_opmode();
-  os_printf("\r\nready!!!\r\n");
-  uart0_sendStr("\r\nready\r\n");
-  at_init();
-//  system_init_done_cb();
-}
+#endif
