@@ -22,7 +22,7 @@
 #include "at_baseCmd.h"
 #include "user_interface.h"
 #include "at_version.h"
-#include "version.h"
+//#include "version.h"
 #include "driver/uart_register.h"
 #include "esp_common.h"
 
@@ -99,7 +99,8 @@ at_exeCmdGmr(uint8_t id)
 
   os_sprintf(temp, AT_VERSION);
   uart0_sendStr(temp);
-  os_sprintf(temp,"%06X\r\n", SDK_VERSION);
+  // os_sprintf(temp,"%06X\r\n", SDK_VERSION);
+  os_sprintf(temp,"%s\r\n", system_get_sdk_version());
   uart0_sendStr(temp);
   os_sprintf(temp,"compiled @ %s %s\r\n", __DATE__, __TIME__);
   uart0_sendStr(temp);
